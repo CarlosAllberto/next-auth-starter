@@ -116,6 +116,7 @@ export default function Register() {
 					placeholder="Seu Nome"
 					id="name"
 					name="name"
+					value="Carlos Alberto"
 					className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
 				/>
 			</div>
@@ -125,6 +126,7 @@ export default function Register() {
 					placeholder="Seu E-mail"
 					id="email"
 					name="email"
+					value="teste@gmail.com"
 					className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
 				/>
 			</div>
@@ -134,6 +136,7 @@ export default function Register() {
 					placeholder="Sua senha"
 					id="password"
 					name="password"
+					value="12345678"
 					className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
 				/>
 			</div>
@@ -143,14 +146,16 @@ export default function Register() {
 					placeholder="Confirme sua senha"
 					id="confirm-password"
 					name="confirm-password"
+					value="12345678"
 					className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
-				/>
+					/>
 			</div>
 			<div className="flex items-center">
 				<input
 					type="checkbox"
 					id="remember-me"
 					name="remember-me"
+					checked
 					className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
 				/>
 				<label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-white">

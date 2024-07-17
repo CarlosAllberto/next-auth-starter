@@ -9,10 +9,10 @@ export default function Login() {
 	const handleSubmit = async (e: any) => {
 		e.preventDefault()
 
-    const password = e.target[0].value
+		const password = e.target[0].value
 		const confirmPassword = e.target[1].value
 
-    if (!password || password.length < 8) {
+		if (!password || password.length < 8) {
 			toast.error('Password is invalid')
 			return
 		}
@@ -39,28 +39,28 @@ export default function Login() {
 						Enviaremos uma mensagem para o seu E-mail contendo o link para redefinir sua senha.
 					</p>
 				</div>
-        <div>
-          <input
-            type="password"
-            placeholder="Sua senha"
-            id="password"
-            name="password"
-            className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
-          />
-        </div>
-        <div>
-          <input
-            type="password"
-            placeholder="Confirme sua senha"
-            id="confirm-password"
-            name="confirm-password"
-            className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
-          />
-        </div>
+				<div>
+					<input
+						type="password"
+						placeholder="Sua senha"
+						id="password"
+						name="password"
+						className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
+					/>
+				</div>
+				<div>
+					<input
+						type="password"
+						placeholder="Confirme sua senha"
+						id="confirm-password"
+						name="confirm-password"
+						className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
+					/>
+				</div>
 				<div>
 					<button className="bg-white ps-5 pe-5 pt-2 pb-2 rounded-md w-full">Confirmar</button>
 				</div>
-				<Toaster position='top-right' />
+				<Toaster position="top-right" />
 			</form>
 		</main>
 	)

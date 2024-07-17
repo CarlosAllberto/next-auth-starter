@@ -21,6 +21,7 @@
       "@/*": ["./*"],
       "@models/*": ["./models/*"],
       "@utils/*": ["./utils/*"],
+      "@lib/*": ["./lib/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/auth/[...nextauth].js"],
