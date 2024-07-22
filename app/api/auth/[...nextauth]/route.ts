@@ -1,41 +1,39 @@
 import NextAuth from 'next-auth'
 import GitHubProvider from 'next-auth/providers/github'
-import GoogleProvider from 'next-auth/providers/google'
-import FacebookProvider from 'next-auth/providers/facebook'
+// import GoogleProvider from 'next-auth/providers/google'
+// import FacebookProvider from 'next-auth/providers/facebook'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import prisma from '@lib/prisma'
 import bcrypt from 'bcryptjs'
-import User from '@models/User'
-import connect from '@utils/db'
 
 const handler = NextAuth({
 	providers: [
 		GitHubProvider({
-			clientId: process.env.GITHUB_ID ?? '',
-			clientSecret: process.env.GITHUB_SECRET ?? '',
+			clientId: process.env.GITHUB_ID!,
+			clientSecret: process.env.GITHUB_SECRET!,
 		}),
-		GoogleProvider({
-			clientId: process.env.GOOGLE_CLIENT_ID ?? '',
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? '',
-		}),
-		FacebookProvider({
-			clientId: process.env.FACEBOOK_CLIENT_ID ?? '',
-			clientSecret: process.env.FACEBOOK_CLIENT_SECRET ?? '',
-		}),
+		// GoogleProvider({
+		// 	clientId: process.env.GOOGLE_CLIENT_ID!,
+		// 	clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+		// }),
+		// FacebookProvider({
+		// 	clientId: process.env.FACEBOOK_CLIENT_ID!,
+		// 	clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+		// }),
 		CredentialsProvider({
 			name: 'Credentials',
 			credentials: {
 				email: { label: 'Email', type: 'email' },
 				password: { label: 'Password', type: 'password' },
 			},
+
 			async authorize(credentials) {
-				await connect()
+				await prisma.$connect()
 				try {
-					const user = await User.findOne({ email: credentials?.email })
+					let user = await prisma.user.findUnique({ where: { email: credentials?.email } })
+
 					if (user) {
-						const isPasswordCorrect = await bcrypt.compare(
-							credentials?.password || '',
-							user.password,
-						)
+						let isPasswordCorrect = await bcrypt.compare(credentials?.password!, user.password!)
 						if (isPasswordCorrect) {
 							return user
 						}
@@ -47,37 +45,30 @@ const handler = NextAuth({
 		}),
 	],
 	callbacks: {
-		async signIn({ user, account }) {
+		async signIn({ user, account }: any) {
 			if (account?.provider == 'credentials') {
 				return true
 			}
 
-			await connect()
-			try {
-				const existingUser = await User.findOne({ email: user.email })
-				if (!existingUser) {
-					const newUser = new User({
-						email: user.email,
-						provider: account?.provider,
-					})
+			await prisma.$connect()
 
-					await newUser.save()
+			try {
+				let existingUser = await prisma.user.findUnique({ where: { email: user.email! } })
+
+				if (existingUser) {
+					return false
 				}
-				return true
-			} catch (err) {
+
+				await prisma.user.create({ data: { email: user.email, provider: account?.provider } })
+			} catch (err: any) {
 				console.log('Error saving user', err)
-				return false
 			}
 		},
-		jwt({ token, trigger, session, account }) {
-			if (account) {
-				token.provider = account?.provider
-			}
-
-			if (trigger === 'update' && session?.name) {
-				token.name = session.name
-			}
-
+		jwt({ token, trigger, session, account }: any) {
+			if (account) token.provider = account?.provider
+	
+			if (trigger === 'update' && session?.name) token.name = session.name
+	
 			return token
 		},
 		async session({ session, token }: any) {

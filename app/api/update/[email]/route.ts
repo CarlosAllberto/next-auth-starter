@@ -1,15 +1,14 @@
-import User from '@models/User'
-import connect from '@utils/db'
 import { NextResponse } from 'next/server'
+import prisma from '@lib/prisma'
 
 export const PUT = async (req: any, { params }: any) => {
-	const { email } = await params
-	const { name } = await req.json()
+	let { email } = await params
+	let { name } = await req.json()
 
-	await connect()
+	await prisma.$connect()
 
 	try {
-		await User.findOneAndUpdate({ email }, { name })
+		await prisma.user.update({ where: { email }, data: { name } })
 		return new NextResponse('updated', { status: 200 })
 	} catch (err: any) {
 		return new NextResponse(err, {

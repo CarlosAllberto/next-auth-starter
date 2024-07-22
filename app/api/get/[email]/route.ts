@@ -1,14 +1,13 @@
-import User from '@models/User'
-import connect from '@utils/db'
 import { NextResponse } from 'next/server'
+import prisma from '@lib/prisma'
 
 export const GET = async (req: any, { params }: any) => {
-	const { email } = await params
+	let { email } = await params
 
-	await connect()
+	await prisma.$connect()
 
 	try {
-		let data: any = await User.findOne({ email })
+		let data = await prisma.user.findUnique({ where: { email } })
 		return NextResponse.json(data)
 	} catch (err: any) {
 		return new NextResponse(err, {

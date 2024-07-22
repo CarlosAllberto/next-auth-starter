@@ -7,6 +7,11 @@ import { useRouter } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast'
 
 export default function Login() {
+	const isValidEmail = (email: string) => {
+		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+		return emailRegex.test(email)
+	}
+
 	const router = useRouter()
 
 	const inputChange = (e: any) => {
@@ -24,6 +29,10 @@ export default function Login() {
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault()
+
+		if (!isValidEmail(email)) {
+			return toast.error('Email is invalid')
+		}
 
 		let result = await signIn('credentials', {
 			email,
@@ -111,7 +120,7 @@ export default function Login() {
 				<p className="text-white text-center">ou</p>
 			</div>
 			<div className="flex justify-center gap-4">
-				<Image
+				{/* <Image
 					src="/google.png"
 					alt="google"
 					width={40}
@@ -126,7 +135,7 @@ export default function Login() {
 					height={40}
 					className="cursor-pointer rounded-full"
 					onClick={() => signIn('facebook', { callbackUrl: '/' })}
-				/>
+				/> */}
 				<Image
 					src="/github.png"
 					alt="github"

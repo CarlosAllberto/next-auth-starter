@@ -5,16 +5,14 @@ import { forgetAction } from './actions'
 import { useFormState } from 'react-dom'
 import { useEffect } from 'react'
 
-const initialState = {
-  email: null,
-}
+const initialState = { email: null }
 
 export default function Login() {
 	const [state, formAction] = useFormState<any>(forgetAction, initialState)
 
 	useEffect(() => {
 		if (state.message) toast(state.message)
-			if (state.error) toast.error(state.error)
+		if (state.error) toast.error(state.error)
 	}, [state])
 
 	return (

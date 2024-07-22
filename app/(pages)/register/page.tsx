@@ -1,73 +1,23 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { registerAction } from './actions'
 import toast, { Toaster } from 'react-hot-toast'
+import { useFormState } from 'react-dom'
+
+const initialState = { email: null }
 
 export default function Register() {
-	const [role, setRole] = useState('')
 	const router = useRouter()
 
-	const isValidEmail = (email: string) => {
-		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
-		return emailRegex.test(email)
-	}
-	const handleSubmit = async (e: any) => {
-		e.preventDefault()
-		const name = e.target[0].value
-		const email = e.target[1].value
-		const password = e.target[2].value
-		const confirmPassword = e.target[3].value
-		const terms = e.target[4].checked
+	const [role, setRole] = useState('')
+	const [state, formAction] = useFormState<any>(registerAction, initialState)
 
-		if (!name || name.length < 8) {
-			toast.error('Name is invalid')
-			return
-		}
-
-		if (!isValidEmail(email)) {
-			toast.error('Email is invalid')
-			return
-		}
-
-		if (!password || password.length < 8) {
-			toast.error('Password is invalid')
-			return
-		}
-
-		if (confirmPassword !== password) {
-			toast.error('Passwords are not equal')
-			return
-		}
-
-		if (!terms) {
-			toast.error('It is not possible to proceed without accepting the terms')
-			return
-		}
-
-		try {
-			const res = await fetch('/api/register', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					name,
-					email,
-					password,
-				}),
-			})
-			if (res.status === 400) {
-				toast.error('The email already in use')
-			}
-			if (res.status === 200) {
-				router.push('/login')
-			}
-		} catch (error) {
-			toast.error('Error, try again')
-			console.log(error)
-		}
-	}
+	useEffect(() => {
+		if (state.ok) router.replace('/')
+		if (state.error) toast.error(state.error)
+	}, [state])
 
 	const screenRole = (
 		<div className="flex justify-center gap-4">
@@ -105,10 +55,10 @@ export default function Register() {
 	const screenRegister = (
 		<form
 			className="border border-zinc-800 rounded-3xl p-16 bg-zinc-900 flex flex-col gap-4"
-			onSubmit={handleSubmit}
+			action={formAction}
 		>
 			<div>
-				<h1 className="text-center text-white font-semibold text-4xl">Login</h1>
+				<h1 className="text-center text-white font-semibold text-4xl">Register</h1>
 			</div>
 			<div>
 				<input
@@ -116,7 +66,6 @@ export default function Register() {
 					placeholder="Seu Nome"
 					id="name"
 					name="name"
-					value="Carlos Alberto"
 					className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
 				/>
 			</div>
@@ -126,7 +75,6 @@ export default function Register() {
 					placeholder="Seu E-mail"
 					id="email"
 					name="email"
-					value="teste@gmail.com"
 					className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
 				/>
 			</div>
@@ -136,7 +84,6 @@ export default function Register() {
 					placeholder="Sua senha"
 					id="password"
 					name="password"
-					value="12345678"
 					className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
 				/>
 			</div>
@@ -146,19 +93,25 @@ export default function Register() {
 					placeholder="Confirme sua senha"
 					id="confirm-password"
 					name="confirm-password"
-					value="12345678"
 					className="w-full bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
+					/>
+			</div>
+			<div>
+				<input
+					type="text"
+					name="role"
+					value={role}
+					className="hidden"
 					/>
 			</div>
 			<div className="flex items-center">
 				<input
 					type="checkbox"
-					id="remember-me"
-					name="remember-me"
-					checked
+					id="terms"
+					name="terms"
 					className="h-4 w-4 rounded border-gray-300 text-black focus:ring-black"
 				/>
-				<label htmlFor="remember-me" className="ml-3 block text-sm leading-6 text-white">
+				<label htmlFor="terms" className="ml-3 block text-sm leading-6 text-white">
 					Accept our terms and privacy policy
 				</label>
 			</div>

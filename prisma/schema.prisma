@@ -21,32 +21,3 @@ model User {
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 }
-
-// generator client {
-//   provider = "prisma-client-js"
-// }
-
-// datasource db {
-//   provider = "mongodb"
-//   url      = env("DATABASE_URL")
-// }
-
-// model User {
-//   id                   String    @id @default(auto()) @map("_id") @db.ObjectId
-//   name                 String?
-//   email                String?   @unique
-//   emailVerified        DateTime?
-//   image                String?
-//   provider             String?
-//   role                 Role @default(USER)
-//   password             String?
-//   resetPasswordToken   String?
-//   resetPasswordExpires DateTime?
-//   createdAt            DateTime  @default(now())
-//   updatedAt            DateTime  @updatedAt
-// }
-
-// enum Role {
-//   USER
-//   ADMIN
-// }

@@ -14,8 +14,7 @@ export default function Home() {
 		role: '',
 	})
 	const [image, setImage] = useState<any>()
-	const credentialsUser = formData.provider === 'credentials'
-
+	
 	useEffect(() => {
 		let get = async () => {
 			try {
@@ -31,13 +30,14 @@ export default function Home() {
 				}
 			} catch (error) {
 				toast.error('Error, try again')
-				console.log(error)
 			}
 		}
-
+		
 		if (status === 'authenticated') get()
-	}, [status])
-
+		}, [status])
+	
+	const credentialsUser = formData.provider === 'credentials'
+	
 	const inputChange = (e: any) => {
 		let { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
@@ -93,7 +93,6 @@ export default function Home() {
 			}
 		} catch (error) {
 			toast.error('Error, try again')
-			console.log(error)
 		}
 	}
 
