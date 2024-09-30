@@ -14,7 +14,7 @@ export default function Home() {
 		role: '',
 	})
 	const [image, setImage] = useState<any>()
-	
+
 	useEffect(() => {
 		let get = async () => {
 			try {
@@ -32,12 +32,12 @@ export default function Home() {
 				toast.error('Error, try again')
 			}
 		}
-		
+
 		if (status === 'authenticated') get()
-		}, [status])
-	
+	}, [status])
+
 	const credentialsUser = formData.provider === 'credentials'
-	
+
 	const inputChange = (e: any) => {
 		let { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
@@ -48,6 +48,10 @@ export default function Home() {
 		setImage(URL.createObjectURL(e.target.files[0]))
 		let input: any = document.querySelector('#image')
 		input.value = null
+	}
+
+	const saveImage = () => {
+		console.log(image)
 	}
 
 	const deleteAccount = async () => {
@@ -75,6 +79,9 @@ export default function Home() {
 	}
 
 	const updatePerfil = async () => {
+
+		if (image) saveImage()
+
 		try {
 			let name = formData.name
 
@@ -122,10 +129,15 @@ export default function Home() {
 					</div>
 				) : null}
 			</div>
+			<div>
+				<span className="bg-zinc-800 py-1 p-2 m-auto rounded-full text-zinc-500">
+					{formData.role}
+				</span>
+			</div>
 			<h1 className="text-center text-white font-normal text-2xl">
 				Bem vindo{' '}
 				<span className="font-semibold">
-					{session?.user?.name} {formData.role === 'admin' ? '(admin)' : null}
+					{session?.user?.name}
 				</span>
 			</h1>
 			<div>
@@ -144,21 +156,21 @@ export default function Home() {
 					className="bg-white ps-5 pe-5 pt-2 pb-2 rounded-md w-full"
 					onClick={() => updatePerfil()}
 				>
-					Salvar alterações
+					Salvar Alterações
 				</button>
 			</div>
-			<div className="flex justify-end gap-2">
+			<div className="flex justify-end gap-2 mt-10">
 				<button
-					className="border border-gray-500 text-gray-500 ps-5 pe-5 pt-2 pb-2 rounded-md"
+					className="border border-gray-500 text-gray-500 ps-5 pe-5 pt-2 pb-2 rounded-md w-[60%]"
 					onClick={() => deleteAccount()}
 				>
-					Delete account
+					Deletar Conta
 				</button>
 				<button
-					className="border border-red-500 text-red-500 ps-5 pe-5 pt-2 pb-2 rounded-md"
+					className="border border-red-500 text-red-500 ps-5 pe-5 pt-2 pb-2 rounded-md w-[40%]"
 					onClick={() => signOut()}
 				>
-					Logout
+					Sair
 				</button>
 				<Toaster position="top-right" />
 			</div>
@@ -176,10 +188,15 @@ export default function Home() {
 					className="rounded-full object-cover cursor-pointer aspect-square"
 				/>
 			</div>
+			<div>
+				<span className="bg-zinc-800 py-1 p-2 m-auto rounded-full text-zinc-500">
+					{formData.role}
+				</span>
+			</div>
 			<h1 className="text-center text-white font-normal text-2xl">
 				Bem vindo{' '}
 				<span className="font-semibold">
-					{session?.user?.name} {formData.role === 'admin' ? '(admin)' : null}
+					{session?.user?.name}
 				</span>
 			</h1>
 			<div className="flex justify-end gap-2">

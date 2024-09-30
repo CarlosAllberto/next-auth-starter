@@ -58,7 +58,7 @@ export default function Register() {
 			action={formAction}
 		>
 			<div>
-				<h1 className="text-center text-white font-semibold text-4xl">Register</h1>
+				<h1 className="text-center text-white font-semibold text-4xl">Registrar</h1>
 			</div>
 			<div>
 				<input
@@ -116,7 +116,7 @@ export default function Register() {
 				</label>
 			</div>
 			<div>
-				<button className="bg-white ps-5 pe-5 pt-2 pb-2 rounded-md w-full">Register</button>
+				<button className="bg-white ps-5 pe-5 pt-2 pb-2 rounded-md w-full">Registrar</button>
 			</div>
 			<Toaster position="top-right" />
 		</form>

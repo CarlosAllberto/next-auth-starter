@@ -6,7 +6,7 @@ CREATE TABLE "User" (
     "emailVerified" DATETIME,
     "image" TEXT,
     "provider" TEXT,
-    "role" TEXT,
+    "role" TEXT DEFAULT 'user',
     "password" TEXT,
     "resetPasswordToken" TEXT,
     "resetPasswordExpires" DATETIME,

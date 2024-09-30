@@ -1,25 +1,28 @@
 import NextAuth from 'next-auth'
 import GitHubProvider from 'next-auth/providers/github'
-// import GoogleProvider from 'next-auth/providers/google'
-// import FacebookProvider from 'next-auth/providers/facebook'
+import GoogleProvider from 'next-auth/providers/google'
+import FacebookProvider from 'next-auth/providers/facebook'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import prisma from '@lib/prisma'
 import bcrypt from 'bcryptjs'
 
 const handler = NextAuth({
 	providers: [
+		// Método de login usando provedores: Google, Facebook e Github
 		GitHubProvider({
 			clientId: process.env.GITHUB_ID!,
 			clientSecret: process.env.GITHUB_SECRET!,
 		}),
-		// GoogleProvider({
-		// 	clientId: process.env.GOOGLE_CLIENT_ID!,
-		// 	clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-		// }),
-		// FacebookProvider({
-		// 	clientId: process.env.FACEBOOK_CLIENT_ID!,
-		// 	clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
-		// }),
+		GoogleProvider({
+			clientId: process.env.GOOGLE_CLIENT_ID!,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+		}),
+		FacebookProvider({
+			clientId: process.env.FACEBOOK_CLIENT_ID!,
+			clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+		}),
+
+		// Método de login usando formulário
 		CredentialsProvider({
 			name: 'Credentials',
 			credentials: {
@@ -45,6 +48,7 @@ const handler = NextAuth({
 		}),
 	],
 	callbacks: {
+		// Registra o usuário no banco de dados caso faça login usando providers pela primeira vez
 		async signIn({ user, account }: any) {
 			if (account?.provider == 'credentials') {
 				return true
@@ -54,7 +58,6 @@ const handler = NextAuth({
 
 			try {
 				let existingUser = await prisma.user.findUnique({ where: { email: user.email! } })
-
 				if (existingUser) {
 					return false
 				}
@@ -66,12 +69,13 @@ const handler = NextAuth({
 		},
 		jwt({ token, trigger, session, account }: any) {
 			if (account) token.provider = account?.provider
-	
+
+			// Atualiza as informações do usuário na sessão quando faz um PUT no banco de dados
 			if (trigger === 'update' && session?.name) token.name = session.name
-	
 			return token
 		},
 		async session({ session, token }: any) {
+			// Retorna se o usuário fez login usando formulário ou providers
 			session.user.provider = token.provider
 			return session
 		},

@@ -5,8 +5,11 @@ import { signIn } from 'next-auth/react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import toast, { Toaster } from 'react-hot-toast'
+import { useSession } from 'next-auth/react'
 
 export default function Login() {
+	const { data: session, update, status } = useSession()
+
 	const isValidEmail = (email: string) => {
 		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 		return emailRegex.test(email)
@@ -58,7 +61,10 @@ export default function Login() {
 				</p>
 				<button
 					className="bg-white ps-5 pe-5 pt-2 pb-2 rounded-md w-full mt-4"
-					onClick={() => setFormData({ ...formData, role: 'user' })}
+					onClick={() => {
+						setFormData({ ...formData, role: 'user' })
+						update({ role: "user" })
+					}}
 				>
 					Selecionar
 				</button>
@@ -72,7 +78,10 @@ export default function Login() {
 				</p>
 				<button
 					className="bg-white ps-5 pe-5 pt-2 pb-2 rounded-md w-full mt-4"
-					onClick={() => setFormData({ ...formData, role: 'admin' })}
+					onClick={() => {
+						setFormData({ ...formData, role: 'admin' })
+						update({ role: "admin" })
+					}}
 				>
 					Selecionar
 				</button>
@@ -120,22 +129,22 @@ export default function Login() {
 				<p className="text-white text-center">ou</p>
 			</div>
 			<div className="flex justify-center gap-4">
-				{/* <Image
+				<Image
 					src="/google.png"
 					alt="google"
 					width={40}
 					height={40}
-					className="cursor-pointer rounded-full"
-					onClick={() => signIn('google', { callbackUrl: '/' })}
+					className="cursor-pointer rounded-full opacity-5"
+					// onClick={() => signIn('google', { callbackUrl: '/' })}
 				/>
 				<Image
 					src="/facebook.png"
 					alt="facebook"
 					width={40}
 					height={40}
-					className="cursor-pointer rounded-full"
-					onClick={() => signIn('facebook', { callbackUrl: '/' })}
-				/> */}
+					className="cursor-pointer rounded-full opacity-5"
+					// onClick={() => signIn('facebook', { callbackUrl: '/' })}
+				/>
 				<Image
 					src="/github.png"
 					alt="github"

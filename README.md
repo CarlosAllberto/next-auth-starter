@@ -45,6 +45,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - [x] Alterar dados
 - [x] Excluir conta
 - [x] Logout
-- [ ] Role (user e admin)
+- [x] Role (Apenas com formulário)
 - [ ] Upload de imagem
 - [ ] Esqueci a senha

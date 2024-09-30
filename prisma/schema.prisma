@@ -8,13 +8,13 @@ datasource db {
 }
 
 model User {
-  id                   Int    @id @default(autoincrement())
+  id                   Int       @id @default(autoincrement())
   name                 String?
   email                String?   @unique
   emailVerified        DateTime?
   image                String?
   provider             String?
-  role                 String?
+  role                 String?   @default("user")
   password             String?
   resetPasswordToken   String?
   resetPasswordExpires DateTime?
