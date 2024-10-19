@@ -10,7 +10,6 @@ export async function registerAction(prevState: any, data: FormData) {
 	let email: any = data.get('email')
 	let password: any = data.get('password')
 	let confirmPassword: any = data.get('confirm-password')
-	let role: any = data.get('role')
 	let terms: any = data.get('terms')
 
 	if (!name || name.length < 8) {
@@ -43,7 +42,6 @@ export async function registerAction(prevState: any, data: FormData) {
 				name,
 				email,
 				password,
-				role,
 			}),
 		})
 		if (res.status === 200) {

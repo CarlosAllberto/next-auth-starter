@@ -43,6 +43,22 @@ export default function Home() {
 		setFormData({ ...formData, [name]: value })
 	}
 
+	const roleChange = (e: any) => {
+		let { name, value } = e.target
+		if (value === 'admin') {
+			let resp = prompt('quanto é 1000 - 7?')
+			if (resp != '993') {
+				alert('Você ainda é muito fraco para ser admin')
+				return setFormData({ ...formData, [name]: 'user' })
+			}
+		} else if (value === 'user') {
+			alert('Você não pode ser rebaixado para user')
+			return setFormData({ ...formData, [name]: 'admin' })
+		}
+
+		setFormData({ ...formData, [name]: 'admin' })
+	}
+
 	const ImageChange = (e: any) => {
 		if (!e.target.files || e.target.files.length === 0) return setImage(undefined)
 		setImage(URL.createObjectURL(e.target.files[0]))
@@ -50,9 +66,7 @@ export default function Home() {
 		input.value = null
 	}
 
-	const saveImage = () => {
-		console.log(image)
-	}
+	const saveImage = () => console.log(image)
 
 	const deleteAccount = async () => {
 		let email = session?.user?.email
@@ -79,11 +93,11 @@ export default function Home() {
 	}
 
 	const updatePerfil = async () => {
-
 		if (image) saveImage()
 
 		try {
 			let name = formData.name
+			let role = formData.role
 
 			const res = await fetch(`/api/update/${session?.user?.email}`, {
 				method: 'PUT',
@@ -92,6 +106,7 @@ export default function Home() {
 				},
 				body: JSON.stringify({
 					name,
+					role,
 				}),
 			})
 			if (res.status === 200) {
@@ -130,15 +145,19 @@ export default function Home() {
 				) : null}
 			</div>
 			<div>
-				<span className="bg-zinc-800 py-1 p-2 m-auto rounded-full text-zinc-500">
-					{formData.role}
-				</span>
+				<select
+					name="role"
+					id="role"
+					value={formData.role}
+					onChange={roleChange}
+					className="bg-zinc-800 p-1 rounded-full text-zinc-500"
+				>
+					<option value="user">user</option>
+					<option value="admin">admin</option>
+				</select>
 			</div>
 			<h1 className="text-center text-white font-normal text-2xl">
-				Bem vindo{' '}
-				<span className="font-semibold">
-					{session?.user?.name}
-				</span>
+				Bem vindo <span className="font-semibold">{session?.user?.name}</span>
 			</h1>
 			<div>
 				<input
@@ -189,15 +208,19 @@ export default function Home() {
 				/>
 			</div>
 			<div>
-				<span className="bg-zinc-800 py-1 p-2 m-auto rounded-full text-zinc-500">
-					{formData.role}
-				</span>
+				<select
+					name="role"
+					id="role"
+					value={formData.role}
+					onChange={roleChange}
+					className="bg-zinc-800 p-1 rounded-full text-zinc-500"
+				>
+					<option value="user">user</option>
+					<option value="admin">admin</option>
+				</select>
 			</div>
 			<h1 className="text-center text-white font-normal text-2xl">
-				Bem vindo{' '}
-				<span className="font-semibold">
-					{session?.user?.name}
-				</span>
+				Bem vindo <span className="font-semibold">{session?.user?.name}</span>
 			</h1>
 			<div className="flex justify-end gap-2">
 				<button
