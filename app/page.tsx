@@ -124,7 +124,7 @@ export default function Home() {
 				<div className="flex justify-center">
 					<label htmlFor="image">
 						<Image
-							src={image || session?.user?.image || '/avatar.svg'}
+							src={image || session?.user?.image || '/avatar-default.svg'}
 							alt="avatar"
 							width={80}
 							height={80}
