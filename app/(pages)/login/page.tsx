@@ -90,8 +90,8 @@ export default function Login() {
 						alt="github"
 						width={40}
 						height={40}
-						className="cursor-pointer rounded-full"
-						onClick={() => signIn('github', { callbackUrl: '/' })}
+						className="cursor-pointer rounded-full opacity-5"
+						// onClick={() => signIn('github', { callbackUrl: '/' })}
 					/>
 				</div>
 				<div className="flex justify-center mt-6">
