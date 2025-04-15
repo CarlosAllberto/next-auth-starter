@@ -39,3 +39,4 @@ logica.txt
 /public/avatar/*
 /prisma/migrations/*
 /prisma/dev.db
+/prisma/dev.db*
