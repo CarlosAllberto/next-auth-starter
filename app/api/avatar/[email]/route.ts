@@ -1,5 +1,4 @@
-import { NextResponse } from 'next/server'
-import { NextRequest } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import prisma from '@lib/prisma'
 import { fileTypeFromBuffer } from 'file-type'
 import { v4 as uuidv4 } from 'uuid'

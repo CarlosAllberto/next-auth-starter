@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server'
+import { NextResponse, NextRequest } from 'next/server'
 import prisma from '@lib/prisma'
 
-export const PUT = async (req: any, { params }: { params: { email: string } }) => {
+export const PUT = async (req: NextRequest, { params }: { params: { email: string } }) => {
 	let { email } = params
 	let { name, role, resetPasswordToken, resetPasswordExpires, resetPasswordCode, password } = await req.json()
 
