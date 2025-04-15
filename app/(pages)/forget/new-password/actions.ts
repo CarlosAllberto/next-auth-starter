@@ -2,8 +2,8 @@
 import { cookies } from 'next/headers'
 import bcrypt from 'bcryptjs'
 
-export async function verifyTokenAction(token:any) {
-	const email: any = (cookies()).get('email')?.value
+export async function verifyTokenAction(token:string) {
+	const email: string = (cookies()).get('email')?.value as string
 
   try {
 		const res = await fetch(`http://localhost:3000/api/get/${email}`, {
@@ -36,10 +36,10 @@ export async function verifyTokenAction(token:any) {
 }
 
 export async function updatePassword(prevState:any, data: FormData) {
-	const email: any = (cookies()).get('email')?.value
+	const email: string = (cookies()).get('email')?.value as string
 
-	let password: any = data.get('password')
-  let confirmPassword: any = data.get('confirm-password')
+	let password: string = data.get('password') as string
+  let confirmPassword: string = data.get('confirm-password') as string
 
 	if (!password || password.length < 8) {
 		return { error: `Password is invalid` }

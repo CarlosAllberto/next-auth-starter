@@ -4,9 +4,9 @@
   Atualiza o perfil do usuário
  *================================================*/
 export async function _updateProfile(prevState: any, data: FormData) {
-	let email: any = data.get('email')
-	let name: any = data.get('name')
-	let role: any = data.get('role')
+	let email: string = data.get('email') as string
+	let name: string = data.get('name') as string
+	let role: string = data.get('role') as string
 
 	try {
 		const res = await fetch(`http://localhost:3000/api/update/${email}`, {
@@ -31,7 +31,7 @@ export async function _updateProfile(prevState: any, data: FormData) {
 /*================================================*
   Deleta a conta do usuário
  *================================================*/
-export async function _deleteAccount(email: any) {
+export async function _deleteAccount(email: string) {
 	try {
 		const res = await fetch(`http://localhost:3000/api/delete/${email}`, {
 			method: 'DELETE',
@@ -50,7 +50,7 @@ export async function _deleteAccount(email: any) {
 /*================================================*
   Carrega os dados do usuário
  *================================================*/
-export async function getProfile(email: any) {
+export async function getProfile(email: string) {
 	try {
 		const res = await fetch(`http://localhost:3000/api/get/${email}`, {
 			method: 'GET',

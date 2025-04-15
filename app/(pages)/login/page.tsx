@@ -14,17 +14,17 @@ export default function Login() {
 	const [state, formAction] = useFormState<any>(loginAction, {})
 
 	useEffect(() => {
-		const login = async ({email, password}: any) => {
+		const login = async ({ email, password }: { email: string; password: string }) => {
 			let result = await signIn('credentials', {
 				email,
 				password,
 				redirect: false,
 			})
-	
+
 			if (result?.error) {
 				return toast.error('E-mail ou senha invalidos')
 			}
-	
+
 			router.replace('/')
 		}
 

@@ -10,10 +10,13 @@ export default function Code() {
 	const router = useRouter()
 	const [state, formAction] = useFormState<any>(verifyCodeAction, {})
 
-	const nextInput = (e: any) => {
+	const nextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		let { name, value } = e.target
 		let index = Number(name.split('-')[1]) + 1
-		if (value != '') document.querySelector(`#code-${index}`).focus()
+		if (value != '') {
+			let nextElement = document.querySelector(`#code-${index}`)
+			if (nextElement instanceof HTMLInputElement) nextElement.focus()
+		}
 	}
 
 	useEffect(() => {
@@ -35,7 +38,7 @@ export default function Code() {
 					</p>
 				</div>
 				<form action={formAction}>
-					<div className='mb-5'>
+					<div className="mb-5">
 						<div className="flex gap-2 justify-center items-center">
 							<input
 								type="text"

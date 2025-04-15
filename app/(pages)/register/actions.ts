@@ -6,11 +6,11 @@ export async function registerAction(prevState: any, data: FormData) {
 		return emailRegex.test(email)
 	}
 
-	let name: any = data.get('name')
-	let email: any = data.get('email')
-	let password: any = data.get('password')
-	let confirmPassword: any = data.get('confirm-password')
-	let terms: any = data.get('terms')
+	let name: string = data.get('name') as string
+	let email: string = data.get('email') as string
+	let password: string = data.get('password') as string
+	let confirmPassword: string = data.get('confirm-password') as string
+	let terms: string = data.get('terms') as string
 
 	if (!name || name.length < 8) {
 		return { error: 'Name is invalid' }

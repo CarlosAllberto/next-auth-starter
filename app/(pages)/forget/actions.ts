@@ -8,7 +8,7 @@ export async function forgetAction(prevState: any, data: FormData) {
 		return emailRegex.test(email)
 	}
 
-	let email: any = data.get('email')
+	let email: string = data.get('email') as string
 
 	if (!isValidEmail(email)) {
 		return { error: 'Email is invalid' }

@@ -2,11 +2,11 @@
 import { cookies } from 'next/headers'
 
 export async function verifyCodeAction(prevState:any, data: FormData) {
-	let code1: any = data.get('code-1')
-	let code2: any = data.get('code-2')
-	let code3: any = data.get('code-3')
-	let code4: any = data.get('code-4')
-	const email: any = (cookies()).get('email')?.value
+	let code1: string = data.get('code-1') as string
+	let code2: string = data.get('code-2') as string
+	let code3: string = data.get('code-3') as string
+	let code4: string = data.get('code-4') as string
+	const email: string = (cookies()).get('email')?.value as string
 
   let resetPasswordCode = `${code1}${code2}${code3}${code4}`
 

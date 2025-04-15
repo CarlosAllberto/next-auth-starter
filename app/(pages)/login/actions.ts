@@ -6,8 +6,8 @@ export async function loginAction(prevState: any, data: FormData) {
 		return emailRegex.test(email)
 	}
 
-	let email: any = data.get('email')
-	let password: any = data.get('password')
+	let email: string = data.get('email') as string
+	let password: string = data.get('password') as string
 
 	if (!isValidEmail(email)) {
 		return { error: 'Email is invalid' }
