@@ -8,7 +8,7 @@ import { verifyCodeAction } from './actions'
 
 export default function Code() {
 	const router = useRouter()
-	const [state, formAction] = useFormState<any>(verifyCodeAction, {})
+	const [state, formAction] = useFormState(verifyCodeAction, { error: '', ok: undefined })
 
 	const nextInput = (e: React.ChangeEvent<HTMLInputElement>) => {
 		let { name, value } = e.target
@@ -20,10 +20,10 @@ export default function Code() {
 	}
 
 	useEffect(() => {
-		if (state.ok) {
+		if (state?.ok) {
 			router.push(`/forget/new-password/${state.token}`)
 		}
-		if (state.error) toast.error(state.error)
+		if (state?.error) toast.error(state.error)
 	}, [state])
 
 	return (

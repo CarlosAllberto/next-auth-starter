@@ -8,7 +8,7 @@ import { verifyTokenAction, updatePassword } from '../actions'
 
 export default function NewPassword({ params }: { params: { token: string } }) {
 	const router = useRouter()
-	const [state, formAction] = useFormState<any>(updatePassword, {})
+	const [state, formAction] = useFormState(updatePassword, { error: '', ok: undefined })
 	
 	useEffect(() => {
 		const verifyToken = async () => {

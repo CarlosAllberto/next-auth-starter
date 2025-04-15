@@ -6,17 +6,16 @@ import { useFormState } from 'react-dom'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
-const initialState = { email: null }
 export default function Forget() {
 	const router = useRouter()
-	const [state, formAction] = useFormState<any>(forgetAction, initialState)
+	const [state, formAction] = useFormState(forgetAction, { error: '', ok: undefined })
 
 	useEffect(() => {
-		if (state.ok) {
+		if (state?.ok) {
 			alert(`code: ${state.code}`)
 			router.push('/forget/code')
 		}
-		if (state.error) toast.error(state.error)
+		if (state?.error) toast.error(state.error)
 	}, [state])
 
 	return (

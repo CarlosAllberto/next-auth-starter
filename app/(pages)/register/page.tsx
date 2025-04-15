@@ -6,16 +6,14 @@ import { registerAction } from './actions'
 import toast, { Toaster } from 'react-hot-toast'
 import { useFormState } from 'react-dom'
 
-const initialState = { email: null }
-
 export default function Register() {
 	const router = useRouter()
 
-	const [state, formAction] = useFormState<any>(registerAction, initialState)
+	const [state, formAction] = useFormState(registerAction, { error: '', ok: undefined })
 
 	useEffect(() => {
-		if (state.ok) router.replace('/')
-		if (state.error) toast.error(state.error)
+		if (state?.ok) router.replace('/')
+		if (state?.error) toast.error(state.error)
 	}, [state])
 
 	return (

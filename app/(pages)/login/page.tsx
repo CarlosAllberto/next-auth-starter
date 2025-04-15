@@ -11,7 +11,7 @@ import { useFormState } from 'react-dom'
 export default function Login() {
 	const router = useRouter()
 
-	const [state, formAction] = useFormState<any>(loginAction, {})
+	const [state, formAction] = useFormState(loginAction, { error: '', data: undefined })
 
 	useEffect(() => {
 		const login = async ({ email, password }: { email: string; password: string }) => {

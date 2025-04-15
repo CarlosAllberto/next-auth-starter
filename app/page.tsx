@@ -12,7 +12,7 @@ import { GoTrash } from 'react-icons/go'
 export default function Home() {
 	const router = useRouter()
 
-	const [state, formAction] = useFormState<any>(_updateProfile, {})
+	const [state, formAction] = useFormState(_updateProfile, { error: '', ok: undefined })
 
 	const { data: session, update, status } = useSession()
 	const sessionEmail: string = session?.user?.email as string
@@ -71,7 +71,11 @@ export default function Home() {
 		Troca a imagem do usuário
 	 *================================================*/
 	const imageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		let file = e.target.files[0]
+		let file = e.target.files?.[0]
+		if (!file) {
+			toast.error('Nenhum arquivo selecionado')
+			return
+		}
 
 		let dataFile = new FormData()
 		dataFile.append('file', file)
