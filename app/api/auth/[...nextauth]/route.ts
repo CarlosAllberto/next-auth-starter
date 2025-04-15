@@ -45,8 +45,8 @@ const handler = NextAuth({
 							return user
 						}
 					}
-				} catch (err: any) {
-					throw new Error(err)
+				} catch (err) {
+					throw new Error(String(err))
 				}
 			},
 		}),
@@ -69,7 +69,7 @@ const handler = NextAuth({
 				}
 
 				await prisma.user.create({ data: { email: user.email, provider: account?.provider } })
-			} catch (err: any) {
+			} catch (err) {
 				console.log('Error saving user', err)
 			}
 		},

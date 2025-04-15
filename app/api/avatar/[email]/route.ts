@@ -33,15 +33,15 @@ export const PUT = async (req: NextRequest, { params }: { params: { email: strin
 				data: { image: filename },
 			})
 			return NextResponse.json({ message: 'updated', image: filename }, { status: 200 })
-		} catch (err: any) {
+		} catch (err) {
 			console.log(err)
-			return new NextResponse(err, {
+			return new NextResponse(String(err), {
 				status: 500,
 			})
 		}
-	} catch (err: any) {
+	} catch (err) {
 		console.error('Error:', err)
-		return new NextResponse(err, { status: 500 })
+		return new NextResponse(String(err), { status: 500 })
 	}
 }
 
@@ -55,14 +55,14 @@ export const DELETE = async (req: NextRequest, { params }: { params: { email: st
 				data: { image: null },
 			})
 			return NextResponse.json('update', { status: 200 })
-		} catch (err: any) {
+		} catch (err) {
 			console.log(err)
-			return new NextResponse(err, {
+			return new NextResponse(String(err), {
 				status: 500,
 			})
 		}
-	} catch (err: any) {
+	} catch (err) {
 		console.error('Error:', err)
-		return new NextResponse(err, { status: 500 })
+		return new NextResponse(String(err), { status: 500 })
 	}
 }

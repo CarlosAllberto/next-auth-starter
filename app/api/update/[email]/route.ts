@@ -13,9 +13,9 @@ export const PUT = async (req: NextRequest, { params }: { params: { email: strin
 			data: { name, role, resetPasswordToken, resetPasswordExpires, resetPasswordCode, password },
 		})
 		return new NextResponse('updated', { status: 200 })
-	} catch (err: any) {
+	} catch (err) {
 		console.log(err)
-		return new NextResponse(err, {
+		return new NextResponse(String(err), {
 			status: 500,
 		})
 	}

@@ -9,8 +9,8 @@ export const DELETE = async (req: NextRequest, { params }: { params: { email: st
 	try {
 		await prisma.user.delete({ where: {email} })
 		return new NextResponse('deleted', { status: 200 })
-	} catch (err: any) {
-		return new NextResponse(err, {
+	} catch (err) {
+		return new NextResponse(String(err), {
 			status: 500,
 		}) 
 	}

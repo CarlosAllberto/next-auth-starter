@@ -9,8 +9,8 @@ export const GET = async (req: NextRequest, { params }: { params: { email: strin
 	try {
 		let data = await prisma.user.findUnique({ where: { email } })
 		return NextResponse.json(data)
-	} catch (err: any) {
-		return new NextResponse(err, {
+	} catch (err) {
+		return new NextResponse(String(err), {
 			status: 500,
 		})
 	}
