@@ -95,8 +95,8 @@ export default function Home() {
 			console.log(error)
 		}
 
-		const inputImage: any = document.querySelector('#image')
-		inputImage.value = ''
+		const inputImage = document.querySelector<HTMLInputElement>('#image')
+		if (inputImage) { inputImage.value = '' }
 	}
 
 	const deleteImage = async () => {
