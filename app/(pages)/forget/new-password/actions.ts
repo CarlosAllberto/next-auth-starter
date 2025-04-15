@@ -35,7 +35,7 @@ export async function verifyTokenAction(token:string) {
 	}
 }
 
-export async function updatePassword(prevState:any, data: FormData) {
+export async function updatePassword(prevState:unknown, data: FormData) {
 	const email: string = (cookies()).get('email')?.value as string
 
 	let password: string = data.get('password') as string

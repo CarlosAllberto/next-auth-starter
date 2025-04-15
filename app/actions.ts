@@ -3,7 +3,7 @@
 /*================================================*
   Atualiza o perfil do usuário
  *================================================*/
-export async function _updateProfile(prevState: any, data: FormData) {
+export async function _updateProfile(prevState: unknown, data: FormData) {
 	let email: string = data.get('email') as string
 	let name: string = data.get('name') as string
 	let role: string = data.get('role') as string

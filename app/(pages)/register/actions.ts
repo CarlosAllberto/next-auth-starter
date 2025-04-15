@@ -1,6 +1,6 @@
 'use server'
 
-export async function registerAction(prevState: any, data: FormData) {
+export async function registerAction(prevState: unknown, data: FormData) {
 	const isValidEmail = (email: string) => {
 		const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
 		return emailRegex.test(email)

@@ -1,7 +1,7 @@
 'use server'
 import { cookies } from 'next/headers'
 
-export async function verifyCodeAction(prevState:any, data: FormData) {
+export async function verifyCodeAction(prevState:unknown, data: FormData) {
 	let code1: string = data.get('code-1') as string
 	let code2: string = data.get('code-2') as string
 	let code3: string = data.get('code-3') as string
