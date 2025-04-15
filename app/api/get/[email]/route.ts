@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import prisma from '@lib/prisma'
 
-export const GET = async (req: any, { params }: any) => {
-	let { email } = await params
+export const GET = async (req: any, { params }: { params: { email: string } }) => {
+	let { email } = params
 
 	await prisma.$connect()
 

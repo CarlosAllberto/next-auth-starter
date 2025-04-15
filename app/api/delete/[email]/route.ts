@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server' 
 import prisma from '@lib/prisma'
 
-export const DELETE = async (req: any, { params }: any) => {
-	let { email } = await params
+export const DELETE = async (req: any, { params }: { params: { email: string } }) => {
+	let { email } = params
 
 	await prisma.$connect()
 
@@ -12,6 +12,6 @@ export const DELETE = async (req: any, { params }: any) => {
 	} catch (err: any) {
 		return new NextResponse(err, {
 			status: 500,
-		})
+		}) 
 	}
 }

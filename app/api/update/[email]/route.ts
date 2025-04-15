@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server'
 import prisma from '@lib/prisma'
 
-export const PUT = async (req: any, { params }: any) => {
-	let { email } = await params
+export const PUT = async (req: any, { params }: { params: { email: string } }) => {
+	let { email } = params
 	let { name, role, resetPasswordToken, resetPasswordExpires, resetPasswordCode, password } = await req.json()
 
 	await prisma.$connect()

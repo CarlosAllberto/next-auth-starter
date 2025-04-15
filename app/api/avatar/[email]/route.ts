@@ -5,8 +5,8 @@ import { fileTypeFromBuffer } from 'file-type'
 import { v4 as uuidv4 } from 'uuid'
 import { Jimp } from 'jimp'
 
-export const PUT = async (req: NextRequest, { params }: any) => {
-	let { email } = await params
+export const PUT = async (req: NextRequest, { params }: { params: { email: string } }) => {
+	let { email } = params
 	const data = await req.formData()
 	const dataFile = data.get('file')
 
@@ -46,8 +46,8 @@ export const PUT = async (req: NextRequest, { params }: any) => {
 	}
 }
 
-export const DELETE = async (req: NextRequest, { params }: any) => {
-	let { email } = await params
+export const DELETE = async (req: NextRequest, { params }: { params: { email: string } }) => {
+	let { email } = params
 
 	try {
 		try {

@@ -7,7 +7,7 @@ import { useSession, signOut } from 'next-auth/react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useFormState } from 'react-dom'
 import { _updateProfile, _deleteAccount, getProfile } from './actions'
-import { GoTrash } from "react-icons/go";
+import { GoTrash } from 'react-icons/go'
 
 export default function Home() {
 	const router = useRouter()
@@ -15,17 +15,25 @@ export default function Home() {
 	const [state, formAction] = useFormState<any>(_updateProfile, {})
 
 	const { data: session, update, status } = useSession()
-	const sessionEmail = session?.user?.email
-	const sessionName = session?.user?.name
-	const sessionImage = session?.user?.image
+	const sessionEmail: string = session?.user?.email as string
+	const sessionName: string = session?.user?.name as string
+	const sessionImage: string = session?.user?.image as string
 
-	const [formData, setFormData]: any = useState({
+	interface iFormData {
+		name: string
+		role: string
+		image: string
+		provider: string
+	}
+
+	const [formData, setFormData] = useState<iFormData>({
 		name: '',
 		role: '',
 		image: '',
+		provider: '',
 	})
 	let { name, role, image } = formData
-	
+
 	const credentialsUser = formData.provider === 'credentials'
 
 	/*================================================*
@@ -54,7 +62,7 @@ export default function Home() {
 	/*================================================*
 		Insere os dados do usuário no formData
 	 *================================================*/
-	const inputChange = (e: any) => {
+	const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		let { name, value } = e.target
 		setFormData({ ...formData, [name]: value })
 	}
@@ -62,7 +70,7 @@ export default function Home() {
 	/*================================================*
 		Troca a imagem do usuário
 	 *================================================*/
-	const imageChange = async (e: any) => {
+	const imageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		let file = e.target.files[0]
 
 		let dataFile = new FormData()
@@ -93,7 +101,7 @@ export default function Home() {
 				method: 'DELETE',
 			})
 			if (res.status === 200) {
-				setFormData({ ...formData, image: undefined })
+				setFormData({ ...formData, image: '' })
 				toast.success('Imagem deletada')
 			}
 		} catch (error) {
@@ -105,7 +113,7 @@ export default function Home() {
 	/*================================================*
 		Trocar o tipo de conta do usuário
 	 *================================================*/
-	const roleChange = (e: any) => {
+	const roleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		let { name, value } = e.target
 		if (value === 'admin') {
 			let resp = prompt('quanto é 1000 - 7?')
@@ -149,10 +157,16 @@ export default function Home() {
 				<div>
 					<div className="flex justify-center">
 						<div className="relative">
-							<input type="file" name="image" id="image" className="hidden" onChange={imageChange} />
+							<input
+								type="file"
+								name="image"
+								id="image"
+								className="hidden"
+								onChange={imageChange}
+							/>
 							<label htmlFor="image">
 								<Image
-									src={ image ? `/avatar/${image}` : '/avatar-default.svg'}
+									src={image ? `/avatar/${image}` : '/avatar-default.svg'}
 									alt="avatar"
 									width={80}
 									height={80}
@@ -162,11 +176,11 @@ export default function Home() {
 							{image && (
 								<div className="flex justify-center">
 									<button
-										type='button'
+										type="button"
 										className="bg-zinc-800 p-1 aspect-square rounded-lg absolute bottom-[-5px] right-[-5px] border border-red-500 text-red-500"
 										onClick={() => deleteImage()}
 									>
-										<GoTrash size={16} color="red"/>
+										<GoTrash size={16} color="red" />
 									</button>
 								</div>
 							)}
@@ -234,7 +248,7 @@ export default function Home() {
 			<form action={formAction} className="flex flex-col gap-3">
 				<div className="flex justify-center">
 					<Image
-						src={ `/avatar/${sessionImage}` || sessionImage || '/avatar-default.svg'}
+						src={`/avatar/${sessionImage}` || sessionImage || '/avatar-default.svg'}
 						alt="avatar"
 						width={80}
 						height={80}
