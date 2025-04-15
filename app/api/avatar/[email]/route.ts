@@ -10,11 +10,14 @@ export const PUT = async (req: NextRequest, { params }: { params: { email: strin
 	const dataFile = data.get('file')
 
 	try {
+		if (!(dataFile instanceof File)) {
+			return new NextResponse('Invalid file', { status: 400 })
+		}
 		const bytes = await dataFile.arrayBuffer()
 		const buffer = Buffer.from(bytes)
 
-		const type = await fileTypeFromBuffer(buffer)
-		if (!type && !type?.mime.startsWith('image/')) {
+		const type = await fileTypeFromBuffer(new Uint8Array(buffer))
+		if (!type || !type.mime.startsWith('image/')) {
 			return new NextResponse('Arquivo não suportado', { status: 400 })
 		}
 
