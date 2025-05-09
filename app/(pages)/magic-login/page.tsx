@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { signIn } from 'next-auth/react'
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -35,64 +34,25 @@ export default function Login() {
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-center p-24">
 			<form
-				className="border border-zinc-800 rounded-3xl p-16 bg-zinc-900 flex flex-col gap-4"
+				className="border border-zinc-800 rounded-3xl p-16 bg-zinc-900 flex flex-col gap-4 min-w-[450px]"
 				action={formAction}
 			>
 				<div>
 					<h1 className="text-center text-white font-semibold text-4xl">Login</h1>
 				</div>
+        <div>
+          <p className='text-white/50 text-center'>Você recebera uma mensagem na sua caixa de emails contento o link para realizar o login</p>
+        </div>
 				<div>
 					<input
 						type="email"
 						placeholder="Seu E-mail"
-						className="bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
+						className="bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white w-full"
 						name="email"
 					/>
 				</div>
 				<div>
-					<input
-						type="password"
-						placeholder="Sua senha"
-						className="bg-zinc-900 border border-zinc-800 p-2 rounded-md text-white"
-						name="password"
-					/>
-				</div>
-				<div className="flex justify-end">
-					<a href="/forget" className="text-white/50 text-center">
-						Esqueci a senha
-					</a>
-				</div>
-				<div>
-					<button className="bg-white ps-5 pe-5 pt-2 pb-2 rounded-md w-full">Login</button>
-				</div>
-				<div>
-					<p className="text-white text-center">ou</p>
-				</div>
-				<div className="flex justify-center gap-4">
-					<Image
-						src="/google.png"
-						alt="google"
-						width={40}
-						height={40}
-						className="cursor-pointer rounded-full opacity-5"
-						// onClick={() => signIn('google', { callbackUrl: '/' })}
-					/>
-					<Image
-						src="/facebook.png"
-						alt="facebook"
-						width={40}
-						height={40}
-						className="cursor-pointer rounded-full opacity-5"
-						// onClick={() => signIn('facebook', { callbackUrl: '/' })}
-					/>
-					<Image
-						src="/github.png"
-						alt="github"
-						width={40}
-						height={40}
-						className="cursor-pointer rounded-full opacity-5"
-						// onClick={() => signIn('github', { callbackUrl: '/' })}
-					/>
+					<button className="bg-white ps-5 pe-5 pt-2 pb-2 rounded-md w-full">Enviar</button>
 				</div>
 				<div className="flex justify-center mt-6">
 					<a href="/register" className="text-white/50 text-center underline">
