@@ -7,15 +7,10 @@ export async function loginAction(prevState: unknown, data: FormData) {
 	}
 
 	let email: string = data.get('email') as string
-	let password: string = data.get('password') as string
 
 	if (!isValidEmail(email)) {
 		return { error: 'Email is invalid' }
 	}
 
-	if (!password || password.length < 8) {
-		return { error: 'Password is invalid' }
-	}
-
-  return { data: { email, password } }
+  return { data: { email } }
 }

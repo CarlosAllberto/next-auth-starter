@@ -2,9 +2,14 @@ import NextAuth from 'next-auth'
 import GitHubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
+import EmailProvider from 'next-auth/providers/email'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import prisma from '@lib/prisma'
 import bcrypt from 'bcryptjs'
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import { PrismaClient } from '@prisma/client'
+
+const prismaClient = new PrismaClient()
 
 declare module 'next-auth' {
 	interface Session {
@@ -18,6 +23,7 @@ declare module 'next-auth' {
 }
 
 const handler = NextAuth({
+	adapter: PrismaAdapter(prismaClient),
 	providers: [
 		/*================================================*
 			Método de login usando provedores: Google, Facebook e Github
@@ -34,7 +40,21 @@ const handler = NextAuth({
 			clientId: process.env.FACEBOOK_CLIENT_ID!,
 			clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
 		}),
-
+		/*================================================*
+			Método de login usando magic link
+		 *================================================*/
+		EmailProvider({
+			server: {
+				host: process.env.EMAIL_SERVER_HOST,
+				port: process.env.EMAIL_SERVER_PORT,
+				auth: {
+					user: process.env.EMAIL_SERVER_USER,
+					pass: process.env.EMAIL_SERVER_PASSWORD
+				}
+			},
+			from: process.env.EMAIL_FROM,
+			maxAge: 60 * 60 * 24, // 24 hours
+		}),
 		/*================================================*
 			Método de login usando formulário
 		 *================================================*/
